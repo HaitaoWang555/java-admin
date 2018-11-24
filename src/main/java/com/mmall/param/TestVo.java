@@ -22,6 +22,6 @@ public class TestVo {
     @Min(value = 0, message = "id 至少大于等于0")
     private Integer id;
 
-    @NotEmpty
+//    @NotEmpty
     private List<String> str;
 }
