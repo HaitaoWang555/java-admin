@@ -15,8 +15,8 @@ public class TestController {
     @ResponseBody
     public JsonData hello() {
         log.info("hello");
-        throw new PermissionException("test exception");
-         // return JsonData.success("Hello");
+        // throw new PermissionException("test exception");
+        return JsonData.success("Hello");
     }
 }
 
