@@ -25,7 +25,7 @@ public class SysTreeService {
         List<DeptLevelDto> dtoList = Lists.newArrayList();
         for (SysDept dept : deptList) {
             DeptLevelDto dto = DeptLevelDto.adapt(dept);
-            deptList.add(dto);
+            dtoList.add(dto);
         }
         return deptListToTree(dtoList);
     }
