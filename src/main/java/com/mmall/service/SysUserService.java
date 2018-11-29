@@ -63,11 +63,15 @@ public class SysUserService {
         sysUserMapper.updateByPrimaryKeySelective(after);
     }
 
-    private boolean checkEmailExist(String mail, Integer id) {
-        return false;
+    private boolean checkEmailExist(String mail, Integer userId) {
+        return sysUserMapper.countByMail(mail, userId) > 0;
     }
 
-    private boolean checkTelephoneExist(String telephone, Integer id) {
-        return false;
+    private boolean checkTelephoneExist(String telephone, Integer userId) {
+        return sysUserMapper.countByTelephone(telephone, userId) > 0;
+    }
+
+    public SysUser findByKeyword(String keyword) {
+        return sysUserMapper.findByKeyword(keyword);
     }
 }
