@@ -1,6 +1,7 @@
 package com.mmall.service;
 
 import com.google.common.base.Preconditions;
+import com.mmall.beans.Mail;
 import com.mmall.beans.PageQuery;
 import com.mmall.beans.PageResult;
 import com.mmall.common.RequestHolder;
@@ -8,15 +9,14 @@ import com.mmall.dao.SysUserMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysUser;
 import com.mmall.param.UserParam;
-import com.mmall.util.BeanValidator;
-import com.mmall.util.IpUtil;
-import com.mmall.util.MD5Util;
-import com.mmall.util.PasswordUtil;
+import com.mmall.util.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SysUserService {
@@ -43,7 +43,11 @@ public class SysUserService {
         user.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         user.setOperateTime(new Date());
 
-        // TODO: sendEmail
+        // sendEmail
+        Set<String> receivers = new HashSet<String>();
+        receivers.add(user.getMail());
+        Mail mail = Mail.builder().subject("密码").message("欢迎！您的初始密码是"+password+"请登录系统更改密码").receivers(receivers).build();
+        MailUtil.send(mail);
 
         sysUserMapper.insertSelective(user);
     }
