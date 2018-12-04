@@ -3,6 +3,7 @@ package com.mmall.service;
 import com.google.common.base.Preconditions;
 import com.mmall.beans.PageQuery;
 import com.mmall.beans.PageResult;
+import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysUserMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysUser;
@@ -37,7 +38,7 @@ public class SysUserService {
                 .telephone(param.getTelephone()).mail(param.getMail())
                 .password(encryptedPassword).deptId(param.getDeptId())
                 .status(param.getStatus()).remark(param.getRemark()).build();
-        user.setOperator("system"); //TODO:
+        user.setOperator(RequestHolder.getCurrentUser().getUsername());
         user.setOperateIp("127.0.0.1"); //TODO:
         user.setOperateTime(new Date());
 
@@ -60,7 +61,7 @@ public class SysUserService {
                 .username(param.getUsername()).telephone(param.getTelephone())
                 .mail(param.getMail()).deptId(param.getDeptId())
                 .status(param.getStatus()).remark(param.getRemark()).build();
-        after.setOperator("update-system");
+        after.setOperator(RequestHolder.getCurrentUser().getUsername());
         after.setOperateIp("127.0.0.1");
         after.setOperateTime(new Date());
         sysUserMapper.updateByPrimaryKeySelective(after);
